@@ -75,29 +75,48 @@ export default function Home() {
       {/* Hero Section  */}
       <section className="hero min-h-screen bg-gray-100 py-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mt-8 flex items-center">
-            {/* Search Input  */}
-            <input
-              type="text"
-              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Search balance"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+          {isConnectedState ? (
+            <>
+              <div className="mt-8 flex items-center">
+                {/* Search Input and Balances (when connected) */}
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="Search balance"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
 
-          {/* Balances and Symbol */}
-          <ul className="mt-8 divide-y divide-gray-200">
-            {filteredBalances.map((balance, index) => (
-              <li
-                key={index}
-                className="flex flex-wrap items-center justify-between py-4"
-              >
-                <p className="text-gray-900 font-medium">{balance?.symbol}</p>
-                <span className="text-gray-500"> {balance?.formatted}</span>
-              </li>
-            ))}
-          </ul>
+              {/* Balances and Symbol */}
+              <ul className="mt-8 divide-y divide-gray-200">
+                {filteredBalances.map((balance, index) => (
+                  <li
+                    key={index}
+                    className="flex flex-wrap items-center justify-between py-4"
+                  >
+                    <p className="text-gray-900 font-medium">
+                      {balance?.symbol}
+                    </p>
+                    <span className="text-gray-500"> {balance?.formatted}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <>
+              {/* Connect Wallet Prompt (when not connected) */}
+              <div className="text-center mt-8">
+                <h2 className="text-xl font-semibold text-gray-700">
+                  Please connect your wallet to check your balances.
+                </h2>
+                <p className="mt-4 text-gray-500">
+                  Connecting your wallet allows you to view your token balances
+                  and interact with decentralized applications.
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </section>
     </>
