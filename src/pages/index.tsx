@@ -11,7 +11,8 @@ export default function Home() {
 
   // State to store the search query
   const [searchQuery, setSearchQuery] = useState("");
-
+  // State to store the wallet address input value
+  const [walletAddress, setWalletAddress] = useState('');
   // Function to handle connection/disconnection
   const handleConnection = () => {
     if (isConnectedState) {
@@ -43,7 +44,7 @@ export default function Home() {
   const balances = tokenAddresses.map((tokenAddress) => {
     const { data } = useBalance({
       token: `0x${tokenAddress}`,
-      address,
+      address: walletAddress || address,
     });
     return data;
   });
@@ -85,6 +86,17 @@ export default function Home() {
                   placeholder="Search balance"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+
+              {/* Wallet Address Input */}
+              <div className="mt-4 flex items-center">
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  placeholder="Enter wallet address"
+                  value={walletAddress}
+                  onChange={(e) => setWalletAddress(e.target.value)}
                 />
               </div>
 
